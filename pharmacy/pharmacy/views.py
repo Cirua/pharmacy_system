@@ -7,3 +7,12 @@ def home(request):
     }
     
     return render(request, "home.html", context)
+
+from django.shortcuts import render
+
+def about(request):
+    context = {
+        "about_page": "About page 123",
+        "user_name": "Damian"
+    }
+    return render(request, 'about.html', context)
