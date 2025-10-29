@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 from .models import Medicine, Sale
 from .forms import MedicineForm, SaleForm
 from django.contrib import messages
@@ -16,20 +16,20 @@ def login_view(request):
             return redirect('home')
         else:
             return render(request, 'pharmacy/login.html', {'error': 'Invalid credentials'})
-    return render(request, 'pharmacy/login.html')
+    return render(request, 'products/login.html')
 
-@login_required
+
 def home(request):
     low_stock = Medicine.objects.filter(quantity__lt=10)
     recent_sales = Sale.objects.order_by('-date')[:5]
-    return render(request, 'pharmacy/home.html', {'low_stock': low_stock, 'recent_sales': recent_sales})
+    return render(request, 'products/home.html', {'low_stock': low_stock, 'recent_sales': recent_sales})
 
-@login_required
+
 def inventory(request):
     medicines = Medicine.objects.all().order_by('name')
-    return render(request, 'pharmacy/inventory.html', {'medicines': medicines})
+    return render(request, 'products/inventory.html', {'medicines': medicines})
 
-@login_required
+
 def add_medicine(request):
     if request.method == 'POST':
         form = MedicineForm(request.POST)
@@ -39,9 +39,9 @@ def add_medicine(request):
             return redirect('inventory')
     else:
         form = MedicineForm()
-    return render(request, 'pharmacy/medicine_form.html', {'form': form})
+    return render(request, 'products/medicine_form.html', {'form': form})
 
-@login_required
+
 def edit_medicine(request, pk):
     med = get_object_or_404(Medicine, pk=pk)
     if request.method == 'POST':
@@ -52,14 +52,14 @@ def edit_medicine(request, pk):
             return redirect('inventory')
     else:
         form = MedicineForm(instance=med)
-    return render(request, 'pharmacy/medicine_form.html', {'form': form, 'edit': True})
+    return render(request, 'products/medicine_form.html', {'form': form, 'edit': True})
 
-@login_required
+
 def sales(request):
     sales = Sale.objects.order_by('-date')
-    return render(request, 'pharmacy/sales.html', {'sales': sales})
+    return render(request, 'products/sales.html', {'sales': sales})
 
-@login_required
+
 def new_sale(request):
     if request.method == 'POST':
         form = SaleForm(request.POST)
@@ -81,9 +81,9 @@ def new_sale(request):
             return redirect('sales')
     else:
         form = SaleForm()
-    return render(request, 'pharmacy/new_sale.html', {'form': form})
+    return render(request, 'products/new_sale.html', {'form': form})
 
-@login_required
+
 def logout_view(request):
     logout(request)
     return redirect('login')

@@ -10,5 +10,5 @@ def user_login(request):
             login(request, user)
             return redirect('home')  # redirect to home page
         else:
-            return render(request, 'pharmacy/login.html', {'form': {'errors': True}})
-    return render(request, 'pharmacy/login.html')
+            return render(request, 'products/login.html', {'form': {'errors': True}})
+    return render(request, 'products/login.html')
