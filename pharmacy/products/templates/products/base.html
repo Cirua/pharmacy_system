@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pharmacy Management System{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -16,11 +16,11 @@
                 <span>PharmaCare</span>
             </a>
             <ul class="nav-menu">
-                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                <li><a href="{% url 'inventory' %}" class="{% if request.resolver_match.url_name == 'inventory' %}active{% endif %}">Inventory</a></li>
-                <li><a href="{% url 'sales' %}" class="{% if request.resolver_match.url_name == 'sales' %}active{% endif %}">Sales</a></li>
-                <li><a href="{% url 'records' %}" class="{% if request.resolver_match.url_name == 'records' %}active{% endif %}">Records</a></li>
-                <li><a href="{% url 'reports' %}" class="{% if request.resolver_match.url_name == 'reports' %}active{% endif %}">Reports</a></li>
+                <li><a href="{% url 'inventory' %}">Inventory</a></li>
+                <li><a href="{% url 'sales' %}">Sales</a></li>
+                <li><a href="{% url 'records' %}">Records</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <!--<li><a href="">Reports</a></li>-->
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}

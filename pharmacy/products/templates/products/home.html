@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PharmaCare - Your Trusted Pharmacy</title>
-    <link rel="stylesheet" href="home.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1 class="logo">PharmaCare</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#login">Login/Signup</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block title %}Home - PharmaCare{% endblock %}
+
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
     <section id="hero" class="hero">
         <div class="container">
@@ -32,7 +16,7 @@
             </div>
         </div>
     </section>
-
+   
     <section id="featured-products" class="featured">
         <div class="container">
             <h2>Featured Products</h2>
@@ -58,7 +42,7 @@
             </div>
         </div>
     </section>
-
+{% endblock %}
     <footer>
         <div class="container">
             <p>&copy; 2025 PharmaCare. All rights reserved.</p>
