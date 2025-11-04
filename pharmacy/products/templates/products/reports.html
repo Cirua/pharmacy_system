@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare - Sales Report</title>
+    <link rel="stylesheet" href="sales.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+
+        .btn-export {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .btn-export:hover {
+            background-color: #155cb0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PharmaCare Admin Panel</h1>
+    </header>
+
+    <div class="container">
+        <h2>Sales Report</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Medicine Name</th>
+                    <th>Quantity</th>
+                    <th>Price (KSH)</th>
+                    <th>Total (KSH)</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example rows (these would be loaded dynamically from a database) -->
+                <tr>
+                    <td>001</td>
+                    <td>Antibiotic Capsules</td>
+                    <td>3</td>
+                    <td>1499</td>
+                    <td>4497</td>
+                    <td>2025-11-03</td>
+                    <td>John Doe</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Medical Bandages</td>
+                    <td>5</td>
+                    <td>999</td>
+                    <td>4995</td>
+                    <td>2025-11-03</td>
+                    <td>Jane Smith</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Digital Thermometer</td>
+                    <td>2</td>
+                    <td>1800</td>
+                    <td>3600</td>
+                    <td>2025-11-04</td>
+                    <td>Mary Wanjiku</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="total">Total Sales: KSH 13,092</p>
+
+      
+    </div>
+
+</body>
+</html>
