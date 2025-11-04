@@ -1,147 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PharmaCare Sales Report</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f8f9fa;
-      color: #333;
-    }
-    header {
-      background-color: #0077b6;
-      color: white;
-      padding: 15px 0;
-      text-align: center;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-    }
-    nav ul li {
-      display: inline-block;
-      margin: 0 10px;
-    }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .promo {
-      background: linear-gradient(90deg, #00b4d8, #90e0ef);
-      text-align: center;
-      padding: 40px 20px;
-      color: white;
-    }
-    .cta-button {
-      background-color: #023e8a;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .sales-section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .product-card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      padding: 15px;
-    }
-    .product-card img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .product-card h3 {
-      margin: 10px 0;
-    }
-    .original-price {
-      text-decoration: line-through;
-      color: #888;
-    }
-    .sale-price {
-      color: #d00000;
-      font-weight: bold;
-    }
-    footer {
-      background-color: #0077b6;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare - Sales Report</title>
+    <link rel="stylesheet" href="sales.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+
+        .btn-export {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .btn-export:hover {
+            background-color: #155cb0;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>PharmaCare</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Login/Signup</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <h1>PharmaCare Admin Panel</h1>
+    </header>
 
-  <section class="promo">
-    <h2>Limited-Time Sales!</h2>
-    <p>Up to 50% off on select medicines and health products. Don't miss out – offer ends soon!</p>
-    <button class="cta-button">Shop Now</button>
-  </section>
+    <div class="container">
+        <h2>Sales Report</h2>
 
-  <section class="sales-section">
-    <h2>On Sale Now</h2>
-    <div class="product-grid">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150?text=Antibiotics" alt="Antibiotics">
-        <h3>Antibiotic Capsules</h3>
-        <p class="original-price">Ksh 1,500</p>
-        <p class="sale-price">Ksh 1,000</p>
-        <button class="cta-button">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150?text=Bandages" alt="Bandages">
-        <h3>Medical Bandages</h3>
-        <p class="original-price">Ksh 1,500</p>
-        <p class="sale-price">Ksh 1,000</p>
-        <button class="cta-button">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150?text=Supplements" alt="Supplements">
-        <h3>Omega-3 Supplements</h3>
-        <p class="original-price">KSH 2,000</p>
-        <p class="sale-price">KSH 1,500</p>
-        <button class="cta-button">Add to Cart</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150?text=Thermometer" alt="Thermometer">
-        <h3>Digital Thermometer</h3>
-        <p class="original-price">KSH 2,500</p>
-        <p class="sale-price">KSH 1,800</p>
-        <button class="cta-button">Add to Cart</button>
-      </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Medicine Name</th>
+                    <th>Quantity</th>
+                    <th>Price (KSH)</th>
+                    <th>Total (KSH)</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example rows (these would be loaded dynamically from a database) -->
+                <tr>
+                    <td>001</td>
+                    <td>Antibiotic Capsules</td>
+                    <td>3</td>
+                    <td>1499</td>
+                    <td>4497</td>
+                    <td>2025-11-03</td>
+                    <td>John Doe</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Medical Bandages</td>
+                    <td>5</td>
+                    <td>999</td>
+                    <td>4995</td>
+                    <td>2025-11-03</td>
+                    <td>Jane Smith</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Digital Thermometer</td>
+                    <td>2</td>
+                    <td>1800</td>
+                    <td>3600</td>
+                    <td>2025-11-04</td>
+                    <td>Mary Wanjiku</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="total">Total Sales: KSH 13,092</p>
+
+      
     </div>
-  </section>
 
-  <footer>
-    <p>&copy; 2025 PharmaCare. All rights reserved.</p>
-    <p>Contact: info@pharmacare.com | Phone: +254 700 000 000</p>
-  </footer>
 </body>
 </html>
