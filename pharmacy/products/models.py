@@ -28,3 +28,5 @@ class Sale(models.Model):
 
     def __str__(self):
         return f"Sale #{self.id} - {self.medicine.name} x{self.quantity_sold}"
+
+

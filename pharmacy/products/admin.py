@@ -15,9 +15,3 @@ class SaleAdmin(admin.ModelAdmin):
     list_display = ('id', 'medicine', 'quantity_sold', 'total_price', 'date', 'sold_by')
     list_filter = ('date',)
 
-@admin.register(Inventory)
-class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'category', 'quantity', 'buying_price', 'selling_price', 'expiry_date')
-    list_filter = ('category', 'expiry_date')
-    search_fields = ('name', 'category')
-    ordering = ('name',)
