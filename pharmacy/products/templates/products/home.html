@@ -1,53 +1,133 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block title %}Home - PharmaCare{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
 {% block content %}
- <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-    <section id="hero" class="hero">
-        <div class="container">
-            <h2>Welcome to PharmaCare</h2>
-            <p>Your one-stop shop for medicines, health products, and wellness essentials. Fast delivery and expert advice.</p>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for products...">
-                <button>Search</button>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to PharmaCare</h1>
+        <p>Your trusted pharmacy for quality medicines and health products.</p>
+        <a href="{% url 'sales' %}" class="cta-button">Shop Now</a>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+{% if featured_items %}
+<section class="featured-products">
+    <div class="container">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            {% for item in featured_items %}
+            <div class="product-card">
+                <h3>{{ item.name }}</h3>
+                <p>Price: KSH {{ item.selling_price|floatformat:2 }}</p>
+                <form method="POST" action="{% url 'add_to_cart' item.id %}">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" min="1" value="1" style="width:60px;"
+                           oninput="document.getElementById('total-{{ item.id }}').innerText = 
+                                    (this.value * '{{ item.selling_price }}').toFixed(2)">
+                    <p>Total: KSH <span id="total-{{ item.id }}">{{ item.selling_price|floatformat:2 }}</span></p>
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Services Section -->
+<section class="services">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="https://plus.unsplash.com/premium_vector-1683121553553-9480a65e50bd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880" alt="Delivery">
+                <h3>Fast Delivery</h3>
+                <p>Get your medicines delivered to your doorstep quickly and safely.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://plus.unsplash.com/premium_vector-1682270091935-677cd4ff2f4e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2320" alt="Consultation">
+                <h3>Pharmacist Consultation</h3>
+                <p>Talk to our certified pharmacists for guidance on your prescriptions.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://plus.unsplash.com/premium_vector-1724672970461-cfb0822a2209?ixlib=rb-4.1.0&auto=format&fit=crop&q=60&w=352&dpr=2&h=367" alt="Healthcare">
+                <h3>Health Advice</h3>
+                <p>Access tips and advice to stay healthy and prevent illness.</p>
             </div>
         </div>
-    </section>
-   
-    <section id="featured-products" class="featured">
-        <div class="container">
-            <h2>Featured Products</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Medicine" alt="Pain Relief">
-                    <h3>Pain Relief Tablets</h3>
-                    <p>Ksh 999</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Vitamins" alt="Vitamins">
-                    <h3>Multivitamins</h3>
-                    <p>KSH 1,499</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=First+Aid" alt="First Aid Kit">
-                    <h3>First Aid Kit</h3>
-                    <p>KSH 2,499</p>
-                    <button>Add to Cart</button>
-                </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Excellent service and fast delivery. Highly recommend PharmaCare!"</p>
+                <h4>- John Doe</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"The pharmacists were very helpful and knowledgeable."</p>
+                <h4>- Jane Smith</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"A reliable online pharmacy with great prices."</p>
+                <h4>- Mary W.</h4>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<style>
+/* General container */
+.container { width: 90%; margin: 0 auto; padding: 30px 0; }
+
+/* Hero */
+.hero {
+    background-color: #1a73e8;
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+}
+.hero h1 { font-size: 3rem; margin-bottom: 20px; }
+.hero p { font-size: 1.2rem; margin-bottom: 30px; }
+.hero .cta-button { background-color: #fff; color: #1a73e8; padding: 12px 25px; border-radius: 6px; font-weight: bold; text-decoration: none; }
+.hero .cta-button:hover { background-color: #e0f2f1; }
+
+/* Featured Products */
+.featured-products { text-align: center; padding: 50px 0; }
+.featured-products h2 { color: #004d40; margin-bottom: 30px; }
+.product-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.product-card { background: #f9f9f9; padding: 15px; border-radius: 8px; width: 200px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); text-align: center; }
+.product-card p { margin: 10px 0; }
+.product-card button { background-color: #1a73e8; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.product-card button:hover { background-color: #155cb0; }
+
+/* Services */
+.services { background: #f9f9f9; text-align: center; padding: 50px 0; }
+.services h2 { color: #004d40; margin-bottom: 40px; }
+.service-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+.service-card { background: white; padding: 20px; border-radius: 10px; width: 250px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.service-card img { width: 60px; margin-bottom: 20px; }
+.service-card h3 { margin-bottom: 15px; color: #1a73e8; }
+
+/* Testimonials */
+.testimonials { text-align: center; padding: 50px 0; }
+.testimonials h2 { color: #004d40; margin-bottom: 40px; }
+.testimonial-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+.testimonial-card { background: #fff; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.testimonial-card h4 { margin-top: 15px; color: #1a73e8; }
+
+</style>
+
 {% endblock %}
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 PharmaCare. All rights reserved.</p>
-            <p>Contact: info@pharmacare.com | Phone: (+254) 700-000-000</p>
-        </div>
-    </footer>
-</body>
-</html>

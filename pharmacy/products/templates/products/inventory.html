@@ -4,7 +4,6 @@
 {% block title %}Inventory{% endblock %}
 
 {% block content %}
- <link rel="stylesheet" href="{% static 'css/inventory.css' %}">
 <div class="inventory-container">
     <h2>Inventory Management</h2>
 
@@ -26,7 +25,6 @@
             <button type="submit">Add Item</button>
         </form>
     </div>
-
     
     <div class="table-section">
         <h3>Current Stock</h3>
@@ -38,7 +36,6 @@
                         <th>Drug Name</th>
                         <th>Category</th>
                         <th>Quantity</th>
-                        <th>Buying Price</th>
                         <th>Selling Price</th>
                         <th>Expiry Date</th>
                         <th>Actions</th>
@@ -51,9 +48,12 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.category }}</td>
                             <td>{{ item.quantity }}</td>
-                            <td>{{ item.buying_price }}</td>
                             <td>{{ item.selling_price }}</td>
-                            <td>{{ item.expiry_date }}</td>
+                            <td> {% if item.expiry_date %}
+                                    {{ item.expiry_date|date:"Y-m-d" }}
+                                {% else %}
+                                    N/A
+                                {% endif %}</td>
                             <td class="actions">
                                 <a href="{% url 'edit_item' item.id %}" class="edit">Edit</a>
                                 <a href="{% url 'delete_item' item.id %}" class="delete" onclick="return confirm('Are you sure?');">Delete</a>
@@ -67,5 +67,94 @@
         {% endif %}
     </div>
 </div>
+<style>
+.inventory-container {
+   max-width: 700px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+    text-align: center;
+    color: #004d40;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.2s;
+    
+}
+input:focus {
+    border-color: #007bff;
+}
+input[type="date"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    width: 120px;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background: #00897b;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #00695c;
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-section th, .table-section td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-section th {
+    background-color: #e0f2f1;
+}
+
+.actions a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.actions .edit {
+    color: #0288d1;
+}
+
+.actions .delete {
+    color: #d32f2f;
+}
+
+.no-items {
+    text-align: center;
+    color: #888;
+}
+</style>
+
 {% endblock %}
 

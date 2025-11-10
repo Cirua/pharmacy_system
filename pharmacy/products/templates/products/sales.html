@@ -5,72 +5,35 @@
 
 {% block content %}
      <link rel="stylesheet" href="{% static 'css/sale.css' %}">
- {% endblock %}
-<body>
-    <header>
-        <div class="container">
-            <h1 class="logo">PharmaCare</h1>
-            <nav>
-                <ul>
-                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'inventory' %}">Inventory</a></li>
-                    <li><a href="{% url 'sales' %}">Sales</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <section id="promo-banner" class="promo">
-        <div class="container">
-            <h2>Limited-Time Sales!</h2>
-            <p>Up to 50% off on select medicines and health products. Don't miss out – offer ends soon!</p>
-            <button class="cta-button">Shop Now</button>
-        </div>
-    </section>
 
     <section id="sale-products" class="sales-section">
         <div class="container">
             <h2>On Sale Now</h2>
+            {% if inventory %}
             <div class="product-grid">
+                 {% for item in inventory %}
                 <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Antibiotics" alt="Antibiotics">
-                    <h3>Antibiotic Capsules</h3>
-                    <p class="original-price">$19.99</p>
-                    <p class="sale-price">$14.99</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Bandages" alt="Bandages">
-                    <h3>Medical Bandages</h3>
-                    <p class="original-price">$12.99</p>
-                    <p class="sale-price">$9.99</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Supplements" alt="Supplements">
-                    <h3>Omega-3 Supplements</h3>
-                    <p class="original-price">KSH 2,000</p>
-                    <p class="sale-price">KSH 1,500</p>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/200x150?text=Thermometer" alt="Thermometer">
-                    <h3>Digital Thermometer</h3>
-                    <p class="original-price">KSH 2,500</p>
-                    <p class="sale-price">KSH 1,800</p>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
+                    <h3>{{ item.name }}</h3>
+                    <p class="sale-price">${{ item.selling_price }}</p>
+                
+            <form method="POST" action="{% url 'add_to_cart' item.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" min="1" value="1" style="width:60px;"oninput="document.getElementById('total-{{ item.id }}').innerText = 
+                                (this.value * {{ item.selling_price }}).toFixed(2)">
+                <p>Total: KSH <span id="total-{{ item.id }}">{{ item.selling_price|floatformat:2 }}</span></p>
+
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                {% endfor %}
         </div>
+            </div>
+        {% else %}
+            <p style="text-align:center;">No items available for sale.</p>
+        {% endif %}
+    </div>
+        
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 PharmaCare. All rights reserved.</p>
-            <p>Contact: info@pharmacare.com | Phone: +254 700 000 000</p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock %}

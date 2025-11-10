@@ -13,7 +13,13 @@ class SignUpForm(UserCreationForm):
 class InventoryForm(forms.ModelForm):
     class Meta:
         model = InventoryItem
-        fields = ['name', 'category', 'quantity', 'buying_price', 'selling_price', 'expiry_date']
+        fields = ['name', 'category', 'quantity','selling_price', 'expiry_date']
+        widgets = {
+            'expiry_date': forms.DateInput(attrs={
+                'type': 'date',  # HTML5 date picker
+                'class': 'form-control'
+            })
+        }
 
 class SaleForm(forms.ModelForm):
     class Meta:

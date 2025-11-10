@@ -1,3 +1,5 @@
+from decimal import Decimal
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -34,9 +36,10 @@ def login_view(request):
 
 @login_required
 def home(request):
-    low_stock = InventoryItem.objects.filter(quantity__lt=10)
-    recent_sales = Sale.objects.order_by('-date')[:5]
-    return render(request, 'products/home.html', {'low_stock': low_stock, 'recent_sales': recent_sales})
+    
+    
+    featured_items = InventoryItem.objects.order_by('-id')[:4]
+    return render(request, 'products/home.html', {'featured_items': featured_items})
 
 def inventory(request):
     """Display all inventory items and handle adding new ones."""
@@ -90,33 +93,54 @@ def records(request):
     items = InventoryItem.objects.all().order_by('name')
     return render(request, 'products/records.html', {'items': items})
 
-def sales(request):
+def reports(request):
+    """Display all sales reports."""
     sales = Sale.objects.order_by('-date')
-    return render(request, 'products/sales.html', {'sales': sales})
+    return render(request, 'products/reports.html', {'sales': sales})
+
+def sales(request):
+    inventory = InventoryItem.objects.all()
+    sales = Sale.objects.order_by('-date')
+    total_sales = Sale.objects.aggregate(total=Sum('total_price'))['total'] or 0
+    return render(request, 'products/sales.html', {'inventory': inventory, 'sales': sales, 'total_sales': total_sales})
 
 
-def new_sale(request):
+def add_to_cart(request, item_id):
+    """Replaces the old new_sale function — handles sale recording from the product page."""
+    item = get_object_or_404(InventoryItem, id=item_id)
+
     if request.method == 'POST':
-        form = SaleForm(request.POST)
-        if form.is_valid():
-            sale = form.save(commit=False)
-            inventory = sale.inventory_item
-            qty = sale.quantity_sold
-            if qty > inventory.quantity:
-                messages.error(request, "Insufficient stock.")
-                return redirect('new_sale')
-            # compute total and update stock
-            sale.total_price = qty * inventory.selling_price
-            sale.sold_by = request.user
-            sale.date = timezone.now()
-            inventory.quantity -= qty
-            inventory.save()
-            sale.save()
-            messages.success(request, "Sale recorded.")
+        try:
+            quantity = int(request.POST.get('quantity', 1))
+        except (TypeError, ValueError):
+            messages.error(request, "Invalid quantity.")
             return redirect('sales')
-    else:
-        form = SaleForm()
-    return render(request, 'products/new_sale.html', {'form': form})
+
+        if quantity <= 0:
+            messages.error(request, "Quantity must be greater than zero.")
+            return redirect('sales')
+
+        if item.quantity < quantity:
+            messages.error(request, f"Insufficient stock for {item.name}.")
+            return redirect('sales')
+
+        # Compute total and update stock
+        total_price = Decimal(item.selling_price) * quantity
+        item.quantity -= quantity
+        item.save()
+
+        # Save sale record
+        Sale.objects.create(
+            inventory_item=item,
+            quantity_sold=quantity,
+            total_price=total_price,
+            date=timezone.now()
+        )
+
+        messages.success(request, f"Added {quantity} × {item.name} to Sales Report.")
+        return redirect('sales')
+
+    return redirect('sales')
 
 def logout_view(request):
     logout(request)
