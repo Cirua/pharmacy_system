@@ -126,6 +126,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "pharmacy" / "static",  # Adjust the path to your app’s static folder
 ]
 
+LOGIN_URL = '/products/login/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
